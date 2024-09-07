@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import { Archivo } from "next/font/google";
-import { Libre_Franklin } from "next/font/google";
 
 const archivo = Archivo({
   subsets: ["latin"],
