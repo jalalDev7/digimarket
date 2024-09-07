@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/carousel";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import Image from "next/image";
 
 export function Component() {
   return (
@@ -61,7 +62,7 @@ export function Component() {
           <CarouselNext />
           <CarouselContent>
             <CarouselItem>
-              <img
+              <Image
                 src="/placeholder.svg"
                 width="1920"
                 height="600"
@@ -71,7 +72,7 @@ export function Component() {
               />
             </CarouselItem>
             <CarouselItem>
-              <img
+              <Image
                 src="/placeholder.svg"
                 width="1920"
                 height="600"
@@ -81,7 +82,7 @@ export function Component() {
               />
             </CarouselItem>
             <CarouselItem>
-              <img
+              <Image
                 src="/placeholder.svg"
                 width="1920"
                 height="600"
@@ -107,7 +108,7 @@ export function Component() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
               <Card>
-                <img
+                <Image
                   src="/placeholder.svg"
                   width="400"
                   height="300"
@@ -126,7 +127,7 @@ export function Component() {
                 </CardFooter>
               </Card>
               <Card>
-                <img
+                <Image
                   src="/placeholder.svg"
                   width="400"
                   height="300"
@@ -145,7 +146,7 @@ export function Component() {
                 </CardFooter>
               </Card>
               <Card>
-                <img
+                <Image
                   src="/placeholder.svg"
                   width="400"
                   height="300"
@@ -164,7 +165,7 @@ export function Component() {
                 </CardFooter>
               </Card>
               <Card>
-                <img
+                <Image
                   src="/placeholder.svg"
                   width="400"
                   height="300"
