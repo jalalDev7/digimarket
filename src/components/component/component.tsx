@@ -251,9 +251,9 @@ export function Component() {
                         </div>
                       </div>
                       <p className="mt-4 text-muted-foreground">
-                        "I'm absolutely thrilled with my purchase from Digital\n
+                        Im absolutely thrilled with my purchase from Digital\n
                         Store. The quality is outstanding, and the customer\n
-                        service is top-notch. Highly recommended!"
+                        service is top-notch. Highly recommended!
                       </p>
                     </CardContent>
                   </Card>
@@ -274,9 +274,9 @@ export function Component() {
                         </div>
                       </div>
                       <p className="mt-4 text-muted-foreground">
-                        "I'm so impressed with the selection and value at\n Digi
+                        Im so impressed with the selection and value at\n Digi
                         Market. The products are fantastic, and the\n shopping
-                        experience was a breeze. Highly recommended!"
+                        experience was a breeze. Highly recommended!
                       </p>
                     </CardContent>
                   </Card>

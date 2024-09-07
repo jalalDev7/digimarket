@@ -9,11 +9,6 @@ const archivo = Archivo({
   display: "swap",
 });
 
-const libre = Libre_Franklin({
-  subsets: ["latin"],
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   title: "DIGIMarket | Digital products for the best prices",
   description:
@@ -27,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${archivo} ${libre} antialiased`}>{children}</body>
+      <body className={`${archivo}  antialiased`}>{children}</body>
     </html>
   );
 }
