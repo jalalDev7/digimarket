@@ -37,6 +37,7 @@ model products {
   price Int @default(0)
   state String @default("active")
   createdAt DateTime
+  showcase Boolean @default(true)
 
   categories   categories?   @relation(fields: [catId], references: [id])
   catId String?
