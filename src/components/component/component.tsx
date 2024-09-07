@@ -355,7 +355,7 @@ export function Component() {
   );
 }
 
-function AwardIcon(props: any) {
+function AwardIcon(props: { className: string }) {
   return (
     <svg
       {...props}
@@ -375,7 +375,7 @@ function AwardIcon(props: any) {
   );
 }
 
-function BadgeIcon(props: any) {
+function BadgeIcon(props: { className: string }) {
   return (
     <svg
       {...props}
@@ -394,7 +394,7 @@ function BadgeIcon(props: any) {
   );
 }
 
-function FacebookIcon(props: any) {
+function FacebookIcon(props: { className: string }) {
   return (
     <svg
       {...props}
@@ -413,7 +413,7 @@ function FacebookIcon(props: any) {
   );
 }
 
-function InstagramIcon(props: any) {
+function InstagramIcon(props: { className: string }) {
   return (
     <svg
       {...props}
@@ -434,7 +434,7 @@ function InstagramIcon(props: any) {
   );
 }
 
-function MenuIcon(props: any) {
+function MenuIcon(props: { className: string }) {
   return (
     <svg
       {...props}
@@ -455,7 +455,7 @@ function MenuIcon(props: any) {
   );
 }
 
-function MountainIcon(props: any) {
+function MountainIcon(props: { className: string }) {
   return (
     <svg
       {...props}
@@ -474,7 +474,7 @@ function MountainIcon(props: any) {
   );
 }
 
-function ThumbsUpIcon(props: any) {
+function ThumbsUpIcon(props: { className: string }) {
   return (
     <svg
       {...props}
@@ -494,7 +494,7 @@ function ThumbsUpIcon(props: any) {
   );
 }
 
-function TwitterIcon(props: any) {
+function TwitterIcon(props: { className: string }) {
   return (
     <svg
       {...props}
