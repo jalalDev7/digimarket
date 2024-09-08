@@ -19,7 +19,7 @@ model admin {
   username String @unique
   email String @unique
   password String
-  createdAt DateTime
+  createdAt DateTime @default(now())
 }
 
 model categories {
@@ -36,7 +36,7 @@ model products {
   desc String?
   price Int @default(0)
   state String @default("active")
-  createdAt DateTime
+  createdAt DateTime @default(now())
   showcase Boolean @default(true)
 
   categories   categories?   @relation(fields: [catId], references: [id])
@@ -52,7 +52,7 @@ model orders {
   clientPhone String
   clientAdress String
   state String @default("new")
-  createdAt DateTime
+  createdAt DateTime @default(now())
 
   products   products?   @relation(fields: [productId], references: [id])
   productId String?
