@@ -51,6 +51,7 @@ export const appRouter = router({
             username: input.username,
             email: input.email,
             password: encryptPass,
+            createdAt: new Date(),
           },
         });
         if (!createNew) throw new TRPCError({ code: "BAD_REQUEST" });
@@ -60,6 +61,7 @@ export const appRouter = router({
             username: input.username,
             email: input.email,
             password: encryptPass,
+            createdAt: new Date(),
           },
         });
         if (!createNew) throw new TRPCError({ code: "BAD_REQUEST" });
