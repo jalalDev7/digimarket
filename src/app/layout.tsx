@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Archivo } from "next/font/google";
 import { Providers } from "@/components/component/Providers";
+import { getServerSession } from "next-auth/next";
 
 const archivo = Archivo({
   subsets: ["latin"],
@@ -14,15 +15,17 @@ export const metadata: Metadata = {
     "The 1st Digital products store, the best price and the best quality",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession();
+  console.log(session);
   return (
     <html lang="en">
       <body className={`${archivo}  antialiased`}>
-        <Providers>{children}</Providers>
+        <Providers session={session}>{children}</Providers>
       </body>
     </html>
   );
