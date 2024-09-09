@@ -1,7 +1,15 @@
 import bcrypt from "bcrypt";
 
-export function hashPassword(password: string) {
-  const saltRounds = 10;
+export async function hashPassword(password: string) {
+  const hashedPass = await bcrypt.hash(password, 10);
+  return hashedPass;
+}
 
-  return bcrypt.hashSync(password, saltRounds);
+export async function comparePassword(
+  userPassword: string,
+  dbPassword: string
+) {
+  const compare = await bcrypt.compare(userPassword, dbPassword);
+
+  return compare;
 }

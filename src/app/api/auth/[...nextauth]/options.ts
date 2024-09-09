@@ -1,3 +1,5 @@
+import { comparePassword, hashPassword } from "@/constants/functions";
+import { db } from "@/db";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 export const options: NextAuthOptions = {
@@ -13,22 +15,44 @@ export const options: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        const fakeUser = {
-          id: "1",
-          username: "admin",
-          password: "123456",
-          email: "jalal@jalal.com",
-          name: "jalal",
-        };
+        const firstCheck = await db.admin.findMany();
+        if (!firstCheck || firstCheck.length === 0) {
+          const hashPass = await hashPassword("123456");
+          const createFirstAdmin = await db.admin.create({
+            data: {
+              username: "admin",
+              password: hashPass,
+              email: "admin@admin.com",
+            },
+          });
+          if (!createFirstAdmin) return null;
+        }
+
         if (!credentials || !credentials.username || !credentials.password)
           return null;
-        if (
-          credentials.username !== fakeUser.username ||
-          credentials.password !== fakeUser.password
-        ) {
-          return null;
+
+        const checkAdmin = await db.admin.findUnique({
+          where: {
+            username: credentials.username,
+          },
+        });
+        if (!checkAdmin) return null;
+
+        const checkPass = await comparePassword(
+          credentials.password,
+          checkAdmin.password
+        );
+
+        if (checkPass === true) {
+          const user = {
+            id: checkAdmin.id,
+            name: checkAdmin.username,
+            email: checkAdmin.email,
+          };
+
+          return user;
         } else {
-          return fakeUser;
+          return null;
         }
       },
     }),
