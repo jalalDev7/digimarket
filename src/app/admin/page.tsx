@@ -5,7 +5,7 @@ import React from "react";
 const page = () => {
   return (
     <main className="flex flex-col w-full bg-background min-h-screen">
-      <div className="flex flex-row  w-full px-4 py-2 border-b border-primary">
+      <div className="flex flex-row  w-full px-4 py-2 border-b border-primary-foreground">
         <div className="flex flex-row w-full items-center justify-between max-w-screen-xl mx-auto">
           <div className="flex flex-row gap-4 w-full text-primary-foreground">
             <Link href={"/"} className=" rounded-lg">
@@ -22,7 +22,7 @@ const page = () => {
             </Link>
           </div>
           <Link
-            href={"http://localhost:3000/api/auth/signout"}
+            href={"/api/auth/signout"}
             className="bg-muted text-primary px-4 py-2 font-semibold text-nowrap rounded-lg"
           >
             Log out

@@ -70,7 +70,7 @@ const AdminOrders = () => {
     <AdminMaxWidthWrapper>
       <div className="flex flex-col w-full text-primary-foreground items-center justify-center">
         <div className="flex flex-row gap-2 w-full items-start justify-between">
-          <div className="flex flex-col w-full border border-primary-foreground rounded-lg p-4">
+          <div className="flex flex-col w-full bg-card-foreground border border-primary-foreground rounded-lg p-4">
             <div className="flex flex-row w-full items-start justify-between">
               <div className="flex flex-col w-full">
                 <h2 className="text-primary-foreground font-bold">
