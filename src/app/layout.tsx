@@ -3,6 +3,7 @@ import "./globals.css";
 import { Archivo } from "next/font/google";
 import { Providers } from "@/components/component/Providers";
 import { getServerSession } from "next-auth/next";
+import { options } from "./api/auth/[...nextauth]/options";
 
 const archivo = Archivo({
   subsets: ["latin"],
@@ -20,8 +21,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession();
-  console.log(session);
+  const session = await getServerSession(options);
   return (
     <html lang="en">
       <body className={`${archivo}  antialiased`}>

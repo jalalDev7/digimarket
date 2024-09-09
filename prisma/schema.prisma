@@ -59,3 +59,10 @@ model orders {
 
   @@index([productId])
 }
+
+model sliders {
+  id String @default(cuid()) @id
+  title String
+  link String
+  imageLink String
+}
