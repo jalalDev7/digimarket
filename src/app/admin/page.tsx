@@ -17,6 +17,9 @@ const page = () => {
             <Link href={"/admin?section=products"} className=" rounded-lg">
               Products
             </Link>
+            <Link href={"/admin?section=categories"} className=" rounded-lg">
+              Categories
+            </Link>
             <Link href={"/admin?section=settings"} className=" rounded-lg">
               Settings
             </Link>

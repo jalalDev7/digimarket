@@ -34,7 +34,7 @@ const AdminProductEditDialog = (props: {
 }) => {
   const [isOpen, setIsOpen] = useState(props.dialogState);
   const utils = trpc.useUtils();
-
+  const { data: categories } = trpc.getCatgories.useQuery();
   const { mutate: createProduct } = trpc.updtaeProduct.useMutation({
     onSuccess: () => {
       props.setEditState(false);
@@ -220,11 +220,25 @@ const AdminProductEditDialog = (props: {
                         >
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue placeholder="Select a category" />
+                              <SelectValue
+                                placeholder={
+                                  categories
+                                    ? categories.find(
+                                        (cat) => cat.id === props.product.catId
+                                      )?.title
+                                    : null
+                                }
+                              />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="111">Category name</SelectItem>
+                            {categories
+                              ? categories.map((cat) => (
+                                  <SelectItem key={cat.id} value={cat.id}>
+                                    {cat.title}
+                                  </SelectItem>
+                                ))
+                              : null}
                           </SelectContent>
                         </Select>
                       </FormControl>

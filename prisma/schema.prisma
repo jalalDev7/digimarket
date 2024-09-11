@@ -27,7 +27,7 @@ model categories {
   id String @unique @default(cuid())
   title String
   desc String?
-  state String @default("active")
+  state Boolean @default(true)
   products products[]
 }
 

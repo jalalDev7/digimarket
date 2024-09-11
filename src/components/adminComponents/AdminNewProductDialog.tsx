@@ -28,7 +28,7 @@ import { toast } from "@/hooks/use-toast";
 const AdminNewProductDialog = (props: { children: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const utils = trpc.useUtils();
-
+  const { data: categories } = trpc.getCatgories.useQuery();
   const { mutate: createProduct } = trpc.createProduct.useMutation({
     onSuccess: () => {
       form.reset();
@@ -215,7 +215,13 @@ const AdminNewProductDialog = (props: { children: ReactNode }) => {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="111">Category name</SelectItem>
+                            {categories
+                              ? categories.map((cat) => (
+                                  <SelectItem key={cat.id} value={cat.id}>
+                                    {cat.title}
+                                  </SelectItem>
+                                ))
+                              : null}
                           </SelectContent>
                         </Select>
                       </FormControl>
@@ -255,7 +261,7 @@ const AdminNewProductDialog = (props: { children: ReactNode }) => {
                         </FormLabel>
                         <FormControl>
                           <Checkbox
-                            id="state"
+                            id="showcase"
                             checked={field.value}
                             onCheckedChange={field.onChange}
                           />

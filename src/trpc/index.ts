@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { adminProcedure, router } from "./trpc";
+import { adminProcedure, publicProcedure, router } from "./trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/db";
 
@@ -102,6 +102,35 @@ export const appRouter = router({
       });
 
       if (!createNewProduct) throw new TRPCError({ code: "BAD_REQUEST" });
+      return { succes: true };
+    }),
+  getCatgories: publicProcedure.query(async () => {
+    const getCats = await db.categories.findMany();
+    if (!getCats) throw new TRPCError({ code: "BAD_REQUEST" });
+    return getCats;
+  }),
+  createCategory: adminProcedure
+    .input(
+      z.object({
+        title: z.string(),
+        desc: z.string().optional(),
+
+        state: z.boolean(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+      if (!input.title) throw new TRPCError({ code: "BAD_REQUEST" });
+
+      const createNewCat = await db.categories.create({
+        data: {
+          title: input.title,
+          desc: input.desc,
+          state: input.state,
+        },
+      });
+
+      if (!createNewCat) throw new TRPCError({ code: "BAD_REQUEST" });
       return { succes: true };
     }),
 });

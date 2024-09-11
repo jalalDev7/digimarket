@@ -6,6 +6,7 @@ import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { IoMdArrowDropright } from "react-icons/io";
 import AdminMaxWidthWrapper from "./AdminMaxWidthWrapper";
 import AdminProductsList from "./AdminProductsList";
+import AdminCategories from "./AdminCategories";
 
 const AdminSections = () => {
   const searchParams = useSearchParams();
@@ -25,6 +26,8 @@ const AdminSections = () => {
         <AdminOrders />
       ) : section === "products" ? (
         <AdminProductsList />
+      ) : section === "categories" ? (
+        <AdminCategories />
       ) : (
         <AdminOrders />
       )}

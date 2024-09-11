@@ -11,7 +11,7 @@ export interface productType {
   categories: {
     title: string;
     desc: string | null;
-    state: string;
+    state: boolean;
     id: string;
   } | null;
   _count: {
