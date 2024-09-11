@@ -1,6 +1,6 @@
 "use client";
-import React, { Dispatch, ReactNode, SetStateAction, useState } from "react";
-import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import React, { Dispatch, SetStateAction, useState } from "react";
+import { Dialog, DialogContent } from "../ui/dialog";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

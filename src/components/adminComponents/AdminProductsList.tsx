@@ -3,7 +3,6 @@ import AdminMaxWidthWrapper from "./AdminMaxWidthWrapper";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
