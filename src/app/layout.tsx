@@ -4,6 +4,7 @@ import { Archivo } from "next/font/google";
 import { Providers } from "@/components/component/Providers";
 import { getServerSession } from "next-auth/next";
 import { options } from "./api/auth/[...nextauth]/options";
+import { Toaster } from "@/components/ui/toaster";
 
 const archivo = Archivo({
   subsets: ["latin"],
@@ -26,7 +27,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${archivo}  antialiased`}>
-        <Providers session={session}>{children}</Providers>
+        <Providers session={session}>
+          {children}
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );
