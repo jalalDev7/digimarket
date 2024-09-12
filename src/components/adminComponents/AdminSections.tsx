@@ -7,6 +7,7 @@ import { IoMdArrowDropright } from "react-icons/io";
 import AdminMaxWidthWrapper from "./AdminMaxWidthWrapper";
 import AdminProductsList from "./AdminProductsList";
 import AdminCategories from "./AdminCategories";
+import AdminSliders from "./AdminSliders";
 
 const AdminSections = () => {
   const searchParams = useSearchParams();
@@ -28,6 +29,8 @@ const AdminSections = () => {
         <AdminProductsList />
       ) : section === "categories" ? (
         <AdminCategories />
+      ) : section === "sliders" ? (
+        <AdminSliders />
       ) : (
         <AdminOrders />
       )}

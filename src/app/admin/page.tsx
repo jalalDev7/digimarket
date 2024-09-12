@@ -20,6 +20,9 @@ const page = () => {
             <Link href={"/admin?section=categories"} className=" rounded-lg">
               Categories
             </Link>
+            <Link href={"/admin?section=sliders"} className=" rounded-lg">
+              Sliders
+            </Link>
             <Link href={"/admin?section=settings"} className=" rounded-lg">
               Settings
             </Link>

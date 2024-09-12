@@ -1,5 +1,6 @@
 import React from "react";
 import AdminMaxWidthWrapper from "./AdminMaxWidthWrapper";
+import { IoMdAddCircleOutline } from "react-icons/io";
 import {
   Table,
   TableBody,
@@ -9,22 +10,21 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { trpc } from "@/app/_trpc/client";
-import { LuLoader2 } from "react-icons/lu";
-import { IoMdAddCircleOutline } from "react-icons/io";
-import AdminNewCatDialog from "./AdminNewCatDialog";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { LuLoader2 } from "react-icons/lu";
+import AdminNewSliderDialog from "./AdminNewSliderDialog";
 import { toast } from "@/hooks/use-toast";
 
-const AdminCategories = () => {
+const AdminSliders = () => {
   const utils = trpc.useUtils();
-  const { data: categories, isLoading } = trpc.getCatgories.useQuery();
-  const { mutate: deleteCat } = trpc.deleteCategory.useMutation({
+  const { data: sliders, isLoading } = trpc.getSliders.useQuery();
+  const { mutate: deleteSlider } = trpc.deleteSlider.useMutation({
     onSuccess: () => {
-      utils.getCatgories.invalidate();
-      utils.getAdminProducts.invalidate();
+      utils.getSliders.invalidate();
+
       return toast({
-        title: "Category deleted.",
-        description: "The category has been deleted.",
+        title: "Slider deleted.",
+        description: "The slider has been deleted.",
         variant: "success",
       });
     },
@@ -36,7 +36,7 @@ const AdminCategories = () => {
     },
   });
   const handleDelete = (id: string) => {
-    deleteCat({ id: id });
+    deleteSlider({ id: id });
   };
   return (
     <AdminMaxWidthWrapper>
@@ -46,43 +46,41 @@ const AdminCategories = () => {
             <div className="flex flex-row w-full items-start justify-between">
               <div className="flex flex-col w-full">
                 <h2 className="text-primary-foreground font-bold">
-                  Categories list
+                  Sliders list
                 </h2>
                 <h2 className="text-muted-foreground font-normal mb-4">
-                  Browse all categories
+                  Browse all sliders
                 </h2>
               </div>
-              <AdminNewCatDialog>
+              <AdminNewSliderDialog>
                 <div className="flex flex-row gap-1 bg-card text-primary cursor-pointer rounded-lg p-2 items-center justify-center text-nowrap font-medium">
                   <IoMdAddCircleOutline className="size-6" />
-                  Create new category
+                  Create new slider
                 </div>
-              </AdminNewCatDialog>
+              </AdminNewSliderDialog>
             </div>
 
             <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-full">Title</TableHead>
-                  <TableHead>Status</TableHead>
                   <TableHead className="text-right min-w-[100px]">
                     Actions
                   </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {categories
-                  ? categories.map((cat) => (
-                      <TableRow key={cat.id}>
+                {sliders
+                  ? sliders.map((slider) => (
+                      <TableRow key={slider.id}>
                         <TableCell className="font-medium">
-                          {cat.title}
+                          {slider.title}
                         </TableCell>
-                        <TableCell>{cat.state ? "active" : "hidden"}</TableCell>
                         <TableCell className="text-right">
                           <div className="flex flex-row gap-2 items-center justify-end">
                             <RiDeleteBinLine
                               className="size-6  cursor-pointer"
-                              onClick={() => handleDelete(cat.id)}
+                              onClick={() => handleDelete(slider.id)}
                             />
                           </div>
                         </TableCell>
@@ -104,4 +102,4 @@ const AdminCategories = () => {
   );
 };
 
-export default AdminCategories;
+export default AdminSliders;

@@ -173,7 +173,6 @@ export const appRouter = router({
   getProductData: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {
-      console.log(11111, input.id);
       if (!input.id) throw new TRPCError({ code: "BAD_REQUEST" });
       const getProduct = await db.products.findFirst({
         where: {
@@ -215,6 +214,40 @@ export const appRouter = router({
       });
       if (!getProducts) throw new TRPCError({ code: "BAD_REQUEST" });
       return getProducts;
+    }),
+  getSliders: publicProcedure.query(async () => {
+    const getSliders = await db.sliders.findMany();
+    if (!getSliders) throw new TRPCError({ code: "BAD_REQUEST" });
+    return getSliders;
+  }),
+  deleteSlider: adminProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+      if (!input.id) throw new TRPCError({ code: "BAD_REQUEST" });
+      const deleteSlider = await db.sliders.delete({
+        where: {
+          id: input.id,
+        },
+      });
+      if (!deleteSlider) throw new TRPCError({ code: "BAD_REQUEST" });
+      return { success: true };
+    }),
+  createSlider: adminProcedure
+    .input(z.object({ title: z.string(), image: z.string(), link: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+      if (!input.title || !input.image || !input.link)
+        throw new TRPCError({ code: "BAD_REQUEST" });
+      const createNewSlider = await db.sliders.create({
+        data: {
+          title: input.title,
+          link: input.link,
+          imageLink: input.image,
+        },
+      });
+      if (!createNewSlider) throw new TRPCError({ code: "BAD_REQUEST" });
+      return { success: true };
     }),
 });
 
