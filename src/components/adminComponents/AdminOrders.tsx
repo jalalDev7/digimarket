@@ -1,11 +1,10 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import AdminMaxWidthWrapper from "./AdminMaxWidthWrapper";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -19,53 +18,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-];
+import { trpc } from "@/app/_trpc/client";
+import { GiCancel, GiConfirmed } from "react-icons/gi";
+import { LuLoader2 } from "react-icons/lu";
+import { toast } from "@/hooks/use-toast";
 
 const AdminOrders = () => {
+  const [filtre, setFiltre] = useState("new");
+  const utils = trpc.useUtils();
+  const { data: orders, isLoading } = trpc.getOrders.useQuery({
+    filtre: filtre,
+  });
+  const { mutate: update } = trpc.updateOrder.useMutation({
+    onSuccess: () => {
+      utils.getOrders.invalidate();
+
+      return toast({
+        title: "Order updated.",
+        description: "The order has been updated. ",
+        variant: "success",
+      });
+    },
+    onError: () => {
+      return toast({
+        title: "Operation failed",
+        variant: "destructive",
+      });
+    },
+  });
+  const handleOrder = (id: string, newState: string) => {
+    update({ id: id, newState: newState });
+  };
   return (
     <AdminMaxWidthWrapper>
       <div className="flex flex-col w-full text-primary-foreground items-center justify-center">
@@ -77,10 +60,10 @@ const AdminOrders = () => {
                   Order list
                 </h2>
                 <h2 className="text-muted-foreground font-normal mb-4">
-                  Browse all orders
+                  Browse {filtre} orders
                 </h2>
               </div>
-              <Select>
+              <Select onValueChange={(v) => setFiltre(v)}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Filtre by state" />
                 </SelectTrigger>
@@ -90,42 +73,67 @@ const AdminOrders = () => {
                     <SelectItem value="new">New orders</SelectItem>
                     <SelectItem value="confirmed">Confirmed orders</SelectItem>
                     <SelectItem value="canceled">Canceled orders</SelectItem>
+                    <SelectItem value="all  ">All orders</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
             </div>
 
             <Table>
-              <TableCaption>A list of your recent invoices.</TableCaption>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[100px]">Invoice</TableHead>
+                  <TableHead className="min-w-[100px]">Product</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead>Method</TableHead>
-                  <TableHead className="text-right">Amount</TableHead>
+                  <TableHead>Client name</TableHead>
+                  <TableHead>Client phone</TableHead>
+                  <TableHead>Client adress</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {invoices.map((invoice) => (
-                  <TableRow key={invoice.invoice}>
-                    <TableCell className="font-medium">
-                      {invoice.invoice}
-                    </TableCell>
-                    <TableCell>{invoice.paymentStatus}</TableCell>
-                    <TableCell>{invoice.paymentMethod}</TableCell>
-                    <TableCell className="text-right">
-                      {invoice.totalAmount}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {orders
+                  ? orders.map((order) => (
+                      <TableRow key={order.id}>
+                        <TableCell className="font-medium text-nowrap">
+                          {order.products?.title}
+                        </TableCell>
+                        <TableCell>
+                          <div
+                            className={` flex rounded-lg p-2 w-[120px] text-nowrap ${
+                              order.state === "new"
+                                ? "bg-blue-500"
+                                : order.state === "canceled"
+                                ? "bg-red-500"
+                                : "bg-green-500"
+                            }`}
+                          >
+                            {order.state} order
+                          </div>
+                        </TableCell>
+                        <TableCell>{order.clientName}</TableCell>
+                        <TableCell>{order.clientPhone}</TableCell>
+                        <TableCell>{order.clientAdress}</TableCell>
+                        <TableCell className="text-right flex flex-row gap-2 justify-end">
+                          <GiConfirmed
+                            onClick={() => handleOrder(order.id, "confirmed")}
+                            className="size-6 text-green-500 cursor-pointer"
+                          />
+                          <GiCancel
+                            onClick={() => handleOrder(order.id, "canceled")}
+                            className="size-6 text-red-500 cursor-pointer"
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  : null}
               </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TableCell colSpan={3}>Total</TableCell>
-                  <TableCell className="text-right">$2,500.00</TableCell>
-                </TableRow>
-              </TableFooter>
             </Table>
+            {isLoading ? (
+              <div className="flex flex-col w-full items-center justify-center p-4">
+                <LuLoader2 className="size-16 animate-spin" />
+                <h3 className="text-muted-foreground text-xs">Loading...</h3>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

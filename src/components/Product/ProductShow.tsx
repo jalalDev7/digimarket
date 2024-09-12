@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ShoppingCart, Package } from "lucide-react";
 import { trpc } from "@/app/_trpc/client";
+import ProductNewOrderDialog from "./ProductNewOrderDialog";
 const ProductShow = (props: { productId: string }) => {
   const { data: product } = trpc.getProductData.useQuery({
     id: props.productId,
@@ -44,9 +45,11 @@ const ProductShow = (props: { productId: string }) => {
                   <Package className="h-4 w-4" />
                   <span>Total orders: {product._count.orders}</span>
                 </div>
-                <Button className="w-full">
-                  <ShoppingCart className="mr-2 h-4 w-4" /> Buy now
-                </Button>
+                <ProductNewOrderDialog productId={props.productId}>
+                  <Button className="w-full">
+                    <ShoppingCart className="mr-2 h-4 w-4" /> Buy now
+                  </Button>
+                </ProductNewOrderDialog>
               </div>
             </div>
           </div>

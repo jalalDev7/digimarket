@@ -249,6 +249,88 @@ export const appRouter = router({
       if (!createNewSlider) throw new TRPCError({ code: "BAD_REQUEST" });
       return { success: true };
     }),
+  createOrder: publicProcedure
+    .input(
+      z.object({ productId: z.string(), name: z.string(), phone: z.string() })
+    )
+    .mutation(async ({ input }) => {
+      if (!input.name || !input.productId || !input.phone)
+        throw new TRPCError({ code: "BAD_REQUEST" });
+      const createOrder = await db.orders.create({
+        data: {
+          clientName: input.name,
+          clientPhone: input.phone,
+          productId: input.productId,
+          clientAdress: "null",
+        },
+      });
+      if (!createOrder) throw new TRPCError({ code: "BAD_REQUEST" });
+      return { success: true };
+    }),
+  getOrders: adminProcedure
+    .input(z.object({ filtre: z.string() }))
+    .query(async ({ ctx, input }) => {
+      if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+      if (input.filtre === "new") {
+        const getOrders = await db.orders.findMany({
+          where: {
+            state: "new",
+          },
+          include: {
+            products: true,
+          },
+        });
+        if (!getOrders) throw new TRPCError({ code: "BAD_REQUEST" });
+        return getOrders;
+      } else if (input.filtre === "confirmed") {
+        const getOrders = await db.orders.findMany({
+          where: {
+            state: "confirmed",
+          },
+          include: {
+            products: true,
+          },
+        });
+        if (!getOrders) throw new TRPCError({ code: "BAD_REQUEST" });
+        return getOrders;
+      } else if (input.filtre === "canceled") {
+        const getOrders = await db.orders.findMany({
+          where: {
+            state: "canceled",
+          },
+          include: {
+            products: true,
+          },
+        });
+        if (!getOrders) throw new TRPCError({ code: "BAD_REQUEST" });
+        return getOrders;
+      } else {
+        const getOrders = await db.orders.findMany({
+          include: {
+            products: true,
+          },
+        });
+        if (!getOrders) throw new TRPCError({ code: "BAD_REQUEST" });
+        return getOrders;
+      }
+    }),
+  updateOrder: adminProcedure
+    .input(z.object({ id: z.string(), newState: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+      if (!input.id || !input.newState)
+        throw new TRPCError({ code: "BAD_REQUEST" });
+      const update = await db.orders.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          state: input.newState,
+        },
+      });
+      if (!update) throw new TRPCError({ code: "BAD_REQUEST" });
+      return { success: true };
+    }),
 });
 
 export type AppRouter = typeof appRouter;
