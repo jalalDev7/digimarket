@@ -29,6 +29,7 @@ export const appRouter = router({
           price: input.price,
           state: input.state,
           showcase: input.showcase,
+          catId: input.category,
         },
       });
 
@@ -69,7 +70,7 @@ export const appRouter = router({
       if (!deleteProduct) throw new TRPCError({ code: "BAD_REQUEST" });
       return { success: true };
     }),
-  updtaeProduct: adminProcedure
+  updateProducts: adminProcedure
     .input(
       z.object({
         title: z.string(),
@@ -98,6 +99,7 @@ export const appRouter = router({
           price: input.price,
           state: input.state,
           showcase: input.showcase,
+          catId: input.category,
         },
       });
 

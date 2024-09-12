@@ -208,6 +208,7 @@ const AdminNewProductDialog = (props: { children: ReactNode }) => {
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
+                          {...field}
                         >
                           <FormControl>
                             <SelectTrigger>

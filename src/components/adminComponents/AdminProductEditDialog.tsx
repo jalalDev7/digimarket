@@ -35,7 +35,7 @@ const AdminProductEditDialog = (props: {
   const [isOpen, setIsOpen] = useState(props.dialogState);
   const utils = trpc.useUtils();
   const { data: categories } = trpc.getCatgories.useQuery();
-  const { mutate: createProduct } = trpc.updtaeProduct.useMutation({
+  const { mutate: createProduct } = trpc.updateProducts.useMutation({
     onSuccess: () => {
       props.setEditState(false);
       props.setProductOnEdit(undefined);
@@ -217,6 +217,7 @@ const AdminProductEditDialog = (props: {
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
+                          {...field}
                         >
                           <FormControl>
                             <SelectTrigger>
