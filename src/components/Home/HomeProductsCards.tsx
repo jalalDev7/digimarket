@@ -4,6 +4,7 @@ import { Card, CardContent, CardFooter } from "../ui/card";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { trpc } from "@/app/_trpc/client";
+import Link from "next/link";
 
 const HomeProductsCards = (props: { cat: string | undefined }) => {
   const { data: getProducts } = trpc.getHomeProducts.useQuery({
@@ -27,9 +28,11 @@ const HomeProductsCards = (props: { cat: string | undefined }) => {
                 <p className="text-muted-foreground">{product.price} MAD</p>
               </CardContent>
               <CardFooter>
-                <Button variant="default" className="w-full">
-                  Buy now
-                </Button>
+                <Link href={`/product/${product.id}`} className="w-full">
+                  <Button variant="default" className="w-full">
+                    Buy now
+                  </Button>
+                </Link>
               </CardFooter>
             </Card>
           ))

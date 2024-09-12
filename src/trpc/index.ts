@@ -170,6 +170,52 @@ export const appRouter = router({
       if (!getProducts) throw new TRPCError({ code: "BAD_REQUEST" });
       return getProducts;
     }),
+  getProductData: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input }) => {
+      console.log(11111, input.id);
+      if (!input.id) throw new TRPCError({ code: "BAD_REQUEST" });
+      const getProduct = await db.products.findFirst({
+        where: {
+          id: input.id,
+          state: true,
+        },
+        include: {
+          _count: {
+            select: {
+              orders: true,
+            },
+          },
+          categories: {
+            select: {
+              title: true,
+            },
+          },
+        },
+      });
+      if (!getProduct) throw new TRPCError({ code: "BAD_REQUEST" });
+      return getProduct;
+    }),
+  getProductByCat: publicProcedure
+    .input(z.object({ catId: z.string() }))
+    .query(async ({ input }) => {
+      if (!input.catId) throw new TRPCError({ code: "BAD_REQUEST" });
+      const getProducts = await db.products.findMany({
+        where: {
+          state: true,
+          catId: input.catId,
+        },
+        include: {
+          categories: {
+            select: {
+              title: true,
+            },
+          },
+        },
+      });
+      if (!getProducts) throw new TRPCError({ code: "BAD_REQUEST" });
+      return getProducts;
+    }),
 });
 
 export type AppRouter = typeof appRouter;

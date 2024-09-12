@@ -22,7 +22,11 @@ const HomeProducts = () => {
                     Discover our latest and greatest products.
                   </p>
                 </div>
-                <Link href="#" className="mt-4 md:mt-0" prefetch={false}>
+                <Link
+                  href={`/category/${cat.id}`}
+                  className="mt-4 md:mt-0"
+                  prefetch={false}
+                >
                   <Button variant="outline">View More</Button>
                 </Link>
               </div>

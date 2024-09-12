@@ -1,30 +1,38 @@
+"use client";
 import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
+import { trpc } from "@/app/_trpc/client";
 
 const HomeNavbar = () => {
+  const { data: getCats } = trpc.getCatgories.useQuery();
   return (
     <header className="bg-background border-b">
       <div className="container px-4 md:px-6 py-4 flex items-center justify-between mx-auto">
-        <Link href="#" className="flex items-center gap-2" prefetch={false}>
+        <Link href="/" className="flex items-center gap-2" prefetch={false}>
           <MountainIcon className="w-6 h-6" />
           <span className="text-lg font-semibold">Digi Market</span>
         </Link>
         <nav className="hidden md:flex items-center gap-6">
           <Link
-            href="#"
+            href="/"
             className="text-muted-foreground hover:text-foreground"
             prefetch={false}
           >
             Home
           </Link>
-          <Link
-            href="#"
-            className="text-muted-foreground hover:text-foreground"
-            prefetch={false}
-          >
-            Products
-          </Link>
+          {getCats
+            ? getCats.map((cat) => (
+                <Link
+                  key={`category-${cat.id}`}
+                  href={`/category/${cat.id}`}
+                  className="text-muted-foreground hover:text-foreground"
+                  prefetch={false}
+                >
+                  {cat.title}
+                </Link>
+              ))
+            : null}
           <Link
             href="#"
             className="text-muted-foreground hover:text-foreground"
