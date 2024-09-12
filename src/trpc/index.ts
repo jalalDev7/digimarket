@@ -157,6 +157,19 @@ export const appRouter = router({
       if (!deleteProduct) throw new TRPCError({ code: "BAD_REQUEST" });
       return { success: true };
     }),
+  getHomeProducts: publicProcedure
+    .input(z.object({ cat: z.string().optional() }))
+    .query(async ({ input }) => {
+      const getProducts = await db.products.findMany({
+        where: {
+          catId: input.cat,
+          showcase: true,
+          state: true,
+        },
+      });
+      if (!getProducts) throw new TRPCError({ code: "BAD_REQUEST" });
+      return getProducts;
+    }),
 });
 
 export type AppRouter = typeof appRouter;
