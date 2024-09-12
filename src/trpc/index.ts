@@ -135,6 +135,28 @@ export const appRouter = router({
       if (!createNewCat) throw new TRPCError({ code: "BAD_REQUEST" });
       return { succes: true };
     }),
+  deleteCategory: adminProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+      if (!input.id) throw new TRPCError({ code: "BAD_REQUEST" });
+      const getProductsCat = await db.products.updateMany({
+        where: {
+          catId: input.id,
+        },
+        data: {
+          catId: null,
+        },
+      });
+      if (!getProductsCat) throw new TRPCError({ code: "BAD_REQUEST" });
+      const deleteProduct = await db.categories.delete({
+        where: {
+          id: input.id,
+        },
+      });
+      if (!deleteProduct) throw new TRPCError({ code: "BAD_REQUEST" });
+      return { success: true };
+    }),
 });
 
 export type AppRouter = typeof appRouter;

@@ -9,12 +9,35 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { trpc } from "@/app/_trpc/client";
-import { LuLoader2 } from "react-icons/lu";
+import { LuClipboardEdit, LuLoader2 } from "react-icons/lu";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import AdminNewCatDialog from "./AdminNewCatDialog";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { toast } from "@/hooks/use-toast";
 
 const AdminCategories = () => {
+  const utils = trpc.useUtils();
   const { data: categories, isLoading } = trpc.getCatgories.useQuery();
+  const { mutate: deleteCat } = trpc.deleteCategory.useMutation({
+    onSuccess: () => {
+      utils.getCatgories.invalidate();
+      utils.getAdminProducts.invalidate();
+      return toast({
+        title: "Category deleted.",
+        description: "The category has been deleted.",
+        variant: "success",
+      });
+    },
+    onError: () => {
+      return toast({
+        title: "Operation failed",
+        variant: "destructive",
+      });
+    },
+  });
+  const handleDelete = (id: string) => {
+    deleteCat({ id: id });
+  };
   return (
     <AdminMaxWidthWrapper>
       <div className="flex flex-col w-full text-primary-foreground items-center justify-center">
@@ -42,7 +65,9 @@ const AdminCategories = () => {
                 <TableRow>
                   <TableHead className="w-full">Title</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead className="text-right min-w-[100px]">
+                    Actions
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -53,7 +78,15 @@ const AdminCategories = () => {
                           {cat.title}
                         </TableCell>
                         <TableCell>{cat.state ? "active" : "hidden"}</TableCell>
-                        <TableCell className="text-right"></TableCell>
+                        <TableCell className="text-right">
+                          <div className="flex flex-row gap-2 items-center justify-end">
+                            <LuClipboardEdit className="size-6  cursor-pointer" />
+                            <RiDeleteBinLine
+                              className="size-6  cursor-pointer"
+                              onClick={() => handleDelete(cat.id)}
+                            />
+                          </div>
+                        </TableCell>
                       </TableRow>
                     ))
                   : null}
