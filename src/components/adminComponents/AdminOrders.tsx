@@ -83,10 +83,11 @@ const AdminOrders = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead className="min-w-[100px]">Product</TableHead>
-                  <TableHead>Status</TableHead>
+
                   <TableHead>Client name</TableHead>
                   <TableHead>Client phone</TableHead>
                   <TableHead>Client adress</TableHead>
+                  <TableHead>Status</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -97,9 +98,13 @@ const AdminOrders = () => {
                         <TableCell className="font-medium text-nowrap">
                           {order.products?.title}
                         </TableCell>
+
+                        <TableCell>{order.clientName}</TableCell>
+                        <TableCell>{order.clientPhone}</TableCell>
+                        <TableCell>{order.clientAdress}</TableCell>
                         <TableCell>
                           <div
-                            className={` flex rounded-lg p-2 w-[120px] text-nowrap ${
+                            className={` flex rounded-lg px-2 py-1 items-center justify-center w-[120px] text-nowrap ${
                               order.state === "new"
                                 ? "bg-blue-500"
                                 : order.state === "canceled"
@@ -110,9 +115,6 @@ const AdminOrders = () => {
                             {order.state} order
                           </div>
                         </TableCell>
-                        <TableCell>{order.clientName}</TableCell>
-                        <TableCell>{order.clientPhone}</TableCell>
-                        <TableCell>{order.clientAdress}</TableCell>
                         <TableCell className="text-right flex flex-row gap-2 justify-end">
                           <GiConfirmed
                             onClick={() => handleOrder(order.id, "confirmed")}
