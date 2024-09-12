@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Archivo } from "next/font/google";
-import { Providers } from "@/components/component/Providers";
+import { Providers } from "@/components/providers/Providers";
 import { getServerSession } from "next-auth/next";
 import { options } from "./api/auth/[...nextauth]/options";
 import { Toaster } from "@/components/ui/toaster";
