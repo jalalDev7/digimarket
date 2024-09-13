@@ -8,6 +8,7 @@ import AdminMaxWidthWrapper from "./AdminMaxWidthWrapper";
 import AdminProductsList from "./AdminProductsList";
 import AdminCategories from "./AdminCategories";
 import AdminSliders from "./AdminSliders";
+import AdminSettings from "./AdminSettings";
 
 const AdminSections = () => {
   const searchParams = useSearchParams();
@@ -31,6 +32,8 @@ const AdminSections = () => {
         <AdminCategories />
       ) : section === "sliders" ? (
         <AdminSliders />
+      ) : section === "settings" ? (
+        <AdminSettings />
       ) : (
         <AdminOrders />
       )}

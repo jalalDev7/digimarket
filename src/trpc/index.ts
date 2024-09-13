@@ -2,6 +2,7 @@ import { z } from "zod";
 import { adminProcedure, publicProcedure, router } from "./trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/db";
+import { hashPassword } from "@/constants/functions";
 
 export const appRouter = router({
   createProduct: adminProcedure
@@ -182,7 +183,11 @@ export const appRouter = router({
         include: {
           _count: {
             select: {
-              orders: true,
+              orders: {
+                where: {
+                  state: "confirmed",
+                },
+              },
             },
           },
           categories: {
@@ -329,6 +334,24 @@ export const appRouter = router({
         },
       });
       if (!update) throw new TRPCError({ code: "BAD_REQUEST" });
+      return { success: true };
+    }),
+  updatePassword: adminProcedure
+    .input(z.object({ password: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.user || !ctx.user.name)
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+      if (!input.password) throw new TRPCError({ code: "BAD_REQUEST" });
+      const hashNewPassword = await hashPassword(input.password);
+      const updatePass = await db.admin.update({
+        where: {
+          username: ctx.user.name,
+        },
+        data: {
+          password: hashNewPassword,
+        },
+      });
+      if (!updatePass) throw new TRPCError({ code: "BAD_REQUEST" });
       return { success: true };
     }),
 });
