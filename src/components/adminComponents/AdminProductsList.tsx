@@ -68,19 +68,19 @@ const AdminProductsList = () => {
       ) : null}
       <div className="flex flex-col w-full text-primary-foreground items-center justify-center">
         <div className="flex flex-row gap-2 w-full items-start justify-between">
-          <div className="flex flex-col w-full bg-card-foreground border border-primary-foreground rounded-lg p-4">
+          <div className="flex flex-col w-full bg-muted border border-primary-foreground rounded-lg p-4 text-muted-foreground min-h-96">
             <div className="flex flex-row w-full items-start justify-between">
               <div className="flex flex-col w-full">
-                <h2 className="text-primary-foreground font-bold">
+                <h2 className=" font-bold text-xl text-primary">
                   Product list
                 </h2>
-                <h2 className="text-muted-foreground font-normal mb-4">
+                <h2 className="text-muted-foreground text-sm font-normal mb-4">
                   Browse all products
                 </h2>
               </div>
               <div className="flex flex-row gap-2">
                 <AdminNewProductDialog>
-                  <div className="flex bg-card text-primary cursor-pointer rounded-lg px-2 items-center justify-center">
+                  <div className="flex bg-primary text-secondary cursor-pointer rounded-lg px-2 items-center justify-center">
                     <IoMdAddCircleOutline className="size-6" />
                   </div>
                 </AdminNewProductDialog>
@@ -103,20 +103,24 @@ const AdminProductsList = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-full">Product title</TableHead>
-                  <TableHead className="text-nowrap min-w-[100px] text-center">
+                  <TableHead className="w-full font-semibold">
+                    Product title
+                  </TableHead>
+                  <TableHead className="text-nowrap min-w-[100px] text-center font-semibold">
                     Price
                   </TableHead>
-                  <TableHead className="text-nowrap min-w-[100px] text-center">
+                  <TableHead className="text-nowrap min-w-[100px] text-center font-semibold">
                     Statut
                   </TableHead>
-                  <TableHead className="text-nowrap min-w-[100px] text-center">
+                  <TableHead className="text-nowrap min-w-[100px] text-center font-semibold">
                     Show in home page
                   </TableHead>
-                  <TableHead className="text-nowrap min-w-[100px] text-center">
+                  <TableHead className="text-nowrap min-w-[100px] text-center font-semibold">
                     Total orders
                   </TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead className="text-right font-semibold">
+                    Actions
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -141,11 +145,11 @@ const AdminProductsList = () => {
                         <TableCell className="text-right">
                           <div className="flex flex-row gap-2 items-center justify-end">
                             <LuClipboardEdit
-                              className="size-6  cursor-pointer"
+                              className="size-6  cursor-pointer text-blue-500"
                               onClick={() => handleEdit(product)}
                             />
                             <RiDeleteBinLine
-                              className="size-6  cursor-pointer"
+                              className="size-6  cursor-pointer text-red-500"
                               onClick={() => handleDelete(product.id)}
                             />
                           </div>

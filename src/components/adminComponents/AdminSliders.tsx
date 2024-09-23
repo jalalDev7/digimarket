@@ -42,20 +42,15 @@ const AdminSliders = () => {
     <AdminMaxWidthWrapper>
       <div className="flex flex-col w-full text-primary-foreground items-center justify-center">
         <div className="flex flex-row gap-2 w-full items-start justify-between">
-          <div className="flex flex-col w-full bg-card-foreground border border-primary-foreground rounded-lg p-4">
+          <div className="flex flex-col w-full bg-muted text-muted-foreground min-h-96 border border-primary-foreground rounded-lg p-4">
             <div className="flex flex-row w-full items-start justify-between">
               <div className="flex flex-col w-full">
-                <h2 className="text-primary-foreground font-bold">
-                  Sliders list
-                </h2>
-                <h2 className="text-muted-foreground font-normal mb-4">
-                  Browse all sliders
-                </h2>
+                <h2 className="text-primary text-xl font-bold">Sliders list</h2>
+                <h2 className="text-sm font-normal mb-4">Browse all sliders</h2>
               </div>
               <AdminNewSliderDialog>
-                <div className="flex flex-row gap-1 bg-card text-primary cursor-pointer rounded-lg p-2 items-center justify-center text-nowrap font-medium">
+                <div className="flex flex-row gap-1 bg-primary text-secondary cursor-pointer rounded-lg p-2 items-center justify-center text-nowrap font-medium">
                   <IoMdAddCircleOutline className="size-6" />
-                  Create new slider
                 </div>
               </AdminNewSliderDialog>
             </div>
@@ -63,8 +58,10 @@ const AdminSliders = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-full">Title</TableHead>
-                  <TableHead className="text-right min-w-[100px]">
+                  <TableHead className="w-full font-semibold">
+                    Slider title
+                  </TableHead>
+                  <TableHead className="text-right min-w-[100px] font-semibold">
                     Actions
                   </TableHead>
                 </TableRow>
@@ -79,7 +76,7 @@ const AdminSliders = () => {
                         <TableCell className="text-right">
                           <div className="flex flex-row gap-2 items-center justify-end">
                             <RiDeleteBinLine
-                              className="size-6  cursor-pointer"
+                              className="size-6  cursor-pointer text-red-500"
                               onClick={() => handleDelete(slider.id)}
                             />
                           </div>

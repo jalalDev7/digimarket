@@ -4,6 +4,7 @@ import HomeSlider from "./HomeSlider";
 import HomeProducts from "./HomeProducts";
 import HomeTrust from "./HomeTrust";
 import HomeFooter from "./HomeFooter";
+import HomeMarquee from "./HomeMarquee";
 
 const HomeSection = () => {
   return (
@@ -12,6 +13,7 @@ const HomeSection = () => {
       <main className="flex-1">
         <HomeSlider />
         <HomeProducts />
+        <HomeMarquee />
         <HomeTrust />
       </main>
       <HomeFooter />

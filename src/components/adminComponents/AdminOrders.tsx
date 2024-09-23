@@ -53,13 +53,11 @@ const AdminOrders = () => {
     <AdminMaxWidthWrapper>
       <div className="flex flex-col w-full text-primary-foreground items-center justify-center">
         <div className="flex flex-row gap-2 w-full items-start justify-between">
-          <div className="flex flex-col w-full bg-card-foreground border border-primary-foreground rounded-lg p-4">
+          <div className="flex flex-col w-full  border border-primary rounded-lg p-4  bg-muted text-muted-foreground min-h-96">
             <div className="flex flex-row w-full items-start justify-between">
               <div className="flex flex-col w-full">
-                <h2 className="text-primary-foreground font-bold">
-                  Order list
-                </h2>
-                <h2 className="text-muted-foreground font-normal mb-4">
+                <h2 className="text-primary font-bold text-xl">Order list</h2>
+                <h2 className="text-muted-foreground text-sm font-normal mb-4">
                   Browse {filtre} orders
                 </h2>
               </div>
@@ -81,13 +79,15 @@ const AdminOrders = () => {
 
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead className="min-w-[100px]">Product</TableHead>
+                <TableRow className="font-semibold">
+                  <TableHead className="min-w-[100px] font-semibold">
+                    Product
+                  </TableHead>
 
-                  <TableHead>Client name</TableHead>
-                  <TableHead>Client phone</TableHead>
-                  <TableHead>Client adress</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead className="font-semibold">Client name</TableHead>
+                  <TableHead className="font-semibold">Client phone</TableHead>
+                  <TableHead className="font-semibold">Client adress</TableHead>
+                  <TableHead className="font-semibold">Status</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -104,7 +104,7 @@ const AdminOrders = () => {
                         <TableCell>{order.clientAdress}</TableCell>
                         <TableCell>
                           <div
-                            className={` flex rounded-lg px-2 py-1 items-center justify-center w-[120px] text-nowrap ${
+                            className={`text-primary font-semibold flex rounded-lg px-2 py-1 items-center justify-center w-[120px] text-nowrap ${
                               order.state === "new"
                                 ? "bg-blue-500"
                                 : order.state === "canceled"
@@ -112,7 +112,7 @@ const AdminOrders = () => {
                                 : "bg-green-500"
                             }`}
                           >
-                            {order.state} order
+                            {order.state}
                           </div>
                         </TableCell>
                         <TableCell className="text-right flex flex-row gap-2 justify-end">
