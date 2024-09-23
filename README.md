@@ -13,14 +13,12 @@ This is a fully functional e-commerce store built from scratch using **Next.js**
 - **Database:** Integrated with Prisma for database management and queries.
 - **Modern UI:** Built using ShadCN for sleek and responsive components.
 - **Optimized Performance:** Utilizing Next.js features for fast page loading and SSR (Server-Side Rendering).
-- **Stripe Integration:** For secure payment processing.
 
 ## Tech Stack
 
 - **Next.js:** React framework with built-in features like SSR and API routes.
 - **Prisma:** ORM for interacting with the database.
 - **ShadCN:** Component library for a modern and accessible user interface.
-- **Stripe:** Payment gateway integration.
 
 ## Getting Started
 
@@ -52,8 +50,6 @@ This is a fully functional e-commerce store built from scratch using **Next.js**
    Example `.env`:
    ```bash
    DATABASE_URL=your-database-url
-   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your-stripe-key
-   STRIPE_SECRET_KEY=your-stripe-secret-key
    ```
 
 5. Run database migrations:
