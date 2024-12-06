@@ -108,7 +108,15 @@ export const appRouter = router({
       return { succes: true };
     }),
   getCatgories: publicProcedure.query(async () => {
-    const getCats = await db.categories.findMany();
+    const getCats = await db.categories.findMany({
+      include: {
+        _count: {
+          select: {
+            products: true,
+          },
+        },
+      },
+    });
     if (!getCats) throw new TRPCError({ code: "BAD_REQUEST" });
     return getCats;
   }),

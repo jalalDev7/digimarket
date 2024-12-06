@@ -11,29 +11,31 @@ const HomeProducts = () => {
   return (
     <section className="py-12 md:py-16 lg:py-20 space-y-8">
       {categories ? (
-        categories.map((cat) => (
-          <div
-            key={cat.id}
-            className="container px-4 md:px-6 items-center justify-center mx-auto"
-          >
-            <div className="flex flex-col md:flex-row items-center justify-between mb-8">
-              <div className="space-y-2">
-                <h2 className="text-2xl font-bold">{cat.title} Products</h2>
-                <p className="text-muted-foreground">
-                  Discover our latest and greatest products.
-                </p>
+        categories
+          .filter((c) => c._count.products !== 0)
+          .map((cat) => (
+            <div
+              key={cat.id}
+              className="container px-4 md:px-6 items-center justify-center mx-auto"
+            >
+              <div className="flex flex-col md:flex-row items-center justify-between mb-8">
+                <div className="space-y-2">
+                  <h2 className="text-2xl font-bold">{cat.title} Products</h2>
+                  <p className="text-muted-foreground">
+                    Discover our latest and greatest products.
+                  </p>
+                </div>
+                <Link
+                  href={`/category/${cat.id}`}
+                  className="mt-4 md:mt-0"
+                  prefetch={false}
+                >
+                  <Button variant="outline">View More</Button>
+                </Link>
               </div>
-              <Link
-                href={`/category/${cat.id}`}
-                className="mt-4 md:mt-0"
-                prefetch={false}
-              >
-                <Button variant="outline">View More</Button>
-              </Link>
+              <HomeProductsCards cat={cat.id} />
             </div>
-            <HomeProductsCards cat={cat.id} />
-          </div>
-        ))
+          ))
       ) : isLoading ? (
         <LoaderPage />
       ) : null}
